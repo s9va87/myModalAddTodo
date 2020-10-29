@@ -1,5 +1,6 @@
 import './App.css';
 import {useState} from "react";
+import  {Button,Input,Label,Card, CardBody,CardTitle} from 'reactstrap'
 
 const style = {
     'textDecoration': 'line-through'
@@ -17,6 +18,9 @@ function Todo(props) {
     }
     const isDone = done ? style : {}
 
+    const updateButtonHandler = ()=> {
+
+    }
     const saveButtonHandler = () => {
         props.editTodo(todo.id, inputValue)
         setInputValue(todo.title)
@@ -24,28 +28,32 @@ function Todo(props) {
     }
 
     return (
-        <div >
-            <span style={isDone}>{todo.title}</span>
-            <button onClick={deleteButtonHandler}>delete</button>
-            <button onClick={() => props.updateTodo(todo.id)}>upd</button>
-            <button disabled={isFirst} onClick={() => props.moveUp(props.index, props.index - 1)}>↑</button>
-            <button disabled={isLast} onClick={() => props.moveUp(props.index, props.index + 1)}>↓</button>
+        <Card >
+            <CardBody >
+                <CardTitle style={isDone}>
+                    {todo.title}
+                </CardTitle>
+<input type='checkbox' checked={done} onChange={updateButtonHandler}/>
+            <Button onClick={deleteButtonHandler}>delete</Button>
+            <Button onClick={() => props.updateTodo(todo.id)}>upd</Button>
+            <Button disabled={isFirst} onClick={() => props.moveUp(props.index, props.index - 1)}>↑</Button>
+            <Button disabled={isLast} onClick={() => props.moveUp(props.index, props.index + 1)}>↓</Button>
 
             {!isEditMode && <button onClick={() => setIsEditMode(!isEditMode)}>edit</button>}
 
             {isEditMode &&
             <>
-                <label >new title:</label>
-                <input type="text"
+                <Label >new title:</Label>
+                <Input type="text"
 
                        onChange={(e) => setInputValue(e.target.value)}
                        value={inputValue}/>
-                <button onClick={saveButtonHandler}>save</button>
-                <button onClick={() => setIsEditMode(!isEditMode)}>cancel</button>
+                <Button onClick={saveButtonHandler}>save</Button>
+                <Button onClick={() => setIsEditMode(!isEditMode)}>cancel</Button>
             </>}
 
-
-        </div>
+                </CardBody>
+        </Card>
     );
 }
 

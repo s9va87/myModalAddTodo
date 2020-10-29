@@ -1,14 +1,14 @@
 import './App.css';
 
 import Todo from "./todo";
-
+import  {Col} from 'reactstrap'
 
 function List(props){
     // const list = props.list
     const {list=[]} = props;
 
     return (
-        <div >
+        <Col >
             {list.map((el, index)=>
                 <Todo todo={el}
                       key={el.id}
@@ -23,7 +23,7 @@ function List(props){
                       editTodo={props.editTodo}
                 />
             )}
-        </div>
+        </Col>
 );
 }
 export  default  List;

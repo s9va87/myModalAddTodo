@@ -1,6 +1,8 @@
 import {useState} from 'react';
 import './App.css';
 import List from "./list";
+import  {Button,Container, Input, } from 'reactstrap'
+import Controller from "./Controller";
 
 function App() {
 
@@ -12,7 +14,7 @@ function App() {
     ]
 
     const [list, setList] = useState(initialList)
-    const [inputValue, setInputValue] = useState('')
+   const [inputValue, setInputValue] = useState('')
 
 
     const doTodo = (cardId) => {
@@ -26,22 +28,21 @@ function App() {
     }
 
 
-
-    const AddButtonHandler = () => {
+    const addTodo = (newTitle,newStatus) => {
         const newTodo = {
             id: Math.random(),
-            title: inputValue,
-            done: false,
+            title: newTitle,
+            done: newStatus,
         }
         const newList = [...list, newTodo];
         setList(newList);
     }
 
-        const changeTitle = (cardId) => {
-            const newList = [...list]
+    const changeTitle = (cardId) => {
+        const newList = [...list]
 
 
-            setList(newList)
+        setList(newList)
 
 
     }
@@ -52,12 +53,12 @@ function App() {
     }
 
     const editTodo = (todoId, newTitle) => {
-       const newList = list.map((el) => {
-           if(el.id === todoId) {
-               el.title = newTitle
-           }
-           return el
-       })
+        const newList = list.map((el) => {
+            if (el.id === todoId) {
+                el.title = newTitle
+            }
+            return el
+        })
         setList(newList)
     }
 
@@ -66,8 +67,6 @@ function App() {
         setInputValue(e.target.value)
     }
 
-
-
     const moveUp = (currentIndex, nextIndex) => {
         const newList = [...list]
 
@@ -75,26 +74,28 @@ function App() {
         const prevTodo = newList[nextIndex]
 
         newList[currentIndex] = prevTodo
-        newList[nextIndex] =currentTodo
+        newList[nextIndex] = currentTodo
 
         setList(newList)
     }
     return (
-        <div className="App">
 
-            <span>TodoList</span>
-            <input onChange={inputChangeHandler} value={inputValue}/>
-            <button onClick={AddButtonHandler}>Add Todo</button>
-            <List list={list}
-                  deleteTodo={deleteTodo}
-                  updateTodo={doTodo}
-                  moveUp={moveUp}
-                  changeTitle={changeTitle}
-                  editTodo={editTodo}
+            <Container>
+                <Controller addTodo={addTodo}/>
+                <span>TodoList</span>
 
-            />
+                <Input onChange={inputChangeHandler} value={inputValue}/>
+                <Button onClick={addTodo}>Add Todo</Button>
 
-        </div>
+                <List list={list}
+                      deleteTodo={deleteTodo}
+                      updateTodo={doTodo}
+                      moveUp={moveUp}
+                      changeTitle={changeTitle}
+                      editTodo={editTodo}
+                />
+            </Container>
+
     );
 }
 
