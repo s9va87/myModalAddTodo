@@ -25,10 +25,13 @@ function App() {
             return el
         })
         setList(newList)
+
+
     }
 
 
     const addTodo = (newTitle,newStatus) => {
+        newStatus = newStatus === 'true';
         const newTodo = {
             id: Math.random(),
             title: newTitle,
